@@ -56,8 +56,8 @@ namespace CleanStrike.Core.Engine
             }
             if(_cleanStrikeGame.winningPlayer != null)
             {
-                ConsoleUI.CreateIntroView();                
-                ConsoleUI.CreateMatchResultView(_cleanStrikeGame);                
+                ConsoleUI.CreateMatchResultHeaderView();                
+                ConsoleUI.CreateMatchResultBodyView(_cleanStrikeGame);                
             }
             else
             {

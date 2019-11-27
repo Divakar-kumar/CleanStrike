@@ -7,6 +7,7 @@ using System.Text;
 using CleanStrike.Core.Settings;
 using CleanStrike.Core.Repositories;
 using CleanStrike.Core.Models;
+using CleanStrike.Core;
 
 namespace CleanStrike
 {
@@ -30,9 +31,7 @@ namespace CleanStrike
         {
             CleanStrikeGame cleanStrikeGame=_carromBoardRepository.InitializeClearStrikeGame();
             List<IStrikeType> strikeLists=cleanStrikeGame.InitializeStrikeList();
-            Console.WriteLine(" =======================================");
-            Console.WriteLine("        Starting the Clean Strike App");
-            Console.WriteLine(" =======================================");
+            ConsoleUI.CreateIntroView();
             _cleanStrikeService.PlayGame(cleanStrikeGame,strikeLists);
         }
     }

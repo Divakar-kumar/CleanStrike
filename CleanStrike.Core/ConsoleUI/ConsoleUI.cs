@@ -8,14 +8,14 @@ namespace CleanStrike.Core
 {
     public static class ConsoleUI
     {
-        public static void CreateIntroView()
+        public static void CreateMatchResultHeaderView()
         {
             Console.WriteLine(" =======================================");
             Console.WriteLine("           MATCH RESULT                     ");
             Console.WriteLine(" =======================================");
         }
 
-        public static void CreateMatchResultView(CleanStrikeGame _cleanStrikeGame)
+        public static void CreateMatchResultBodyView(CleanStrikeGame _cleanStrikeGame)
         {
             int playersCount = 0;
             Console.Write("" + _cleanStrikeGame.winningPlayer.playerName + " won the game . Final Score : ");
@@ -37,6 +37,13 @@ namespace CleanStrike.Core
         {
             var commandMessage = strike.GetType().Name.Equals(ApplicationConstants.DEFUNCT_STRIKE) ? "throws" : "pockets";
             Console.WriteLine(" " + commandMessage + " " + coin.coinType + " coin");
+        }
+
+        public static void CreateIntroView()
+        {
+            Console.WriteLine(" =======================================");
+            Console.WriteLine("        Starting the Clean Strike App");
+            Console.WriteLine(" =======================================");
         }
 
         public static void CreateFoulView(Player player, IStrikeType strike)
