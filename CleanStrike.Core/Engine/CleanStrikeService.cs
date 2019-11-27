@@ -12,7 +12,7 @@ namespace CleanStrike.Core.Engine
 {
     public interface ICleanStrikeService
     {
-        void PlayGame(CleanStrikeGame cleanStrikeGame);
+        void PlayGame(CleanStrikeGame cleanStrikeGame,List<IStrikeType> strikeLists);
     }
 
     public class CleanStrikeService : ICleanStrikeService
@@ -20,6 +20,10 @@ namespace CleanStrike.Core.Engine
         private readonly ILogger<CleanStrikeService> _logger;
         private readonly ApplicationSettings _config;        
 
+        public CleanStrikeService()
+        {
+
+        }
         public CleanStrikeService(ILogger<CleanStrikeService> logger,
             IOptions<ApplicationSettings> config)
         {
@@ -31,10 +35,10 @@ namespace CleanStrike.Core.Engine
         /// CarromBoard Game
         /// </summary>
         /// <param name="cleanStrikeGame"></param>
-        public void PlayGame(CleanStrikeGame cleanStrikeGame)
+        public void PlayGame(CleanStrikeGame cleanStrikeGame, List<IStrikeType> strikeLists)
         {
             CleanStrikeGame _cleanStrikeGame = cleanStrikeGame;
-            List<IStrikeType> strikeList = _cleanStrikeGame.InitializeStrikeList();            
+            List<IStrikeType> strikeList = strikeLists;
             foreach(var strike in strikeList)
             {                
                 Player player= _cleanStrikeGame.getNextPlayer();

@@ -29,10 +29,11 @@ namespace CleanStrike
         public void Run()
         {
             CleanStrikeGame cleanStrikeGame=_carromBoardRepository.InitializeClearStrikeGame();
+            List<IStrikeType> strikeLists=cleanStrikeGame.InitializeStrikeList();
             Console.WriteLine(" =======================================");
             Console.WriteLine("        Starting the Clean Strike App");
             Console.WriteLine(" =======================================");
-            _cleanStrikeService.PlayGame(cleanStrikeGame);
+            _cleanStrikeService.PlayGame(cleanStrikeGame,strikeLists);
         }
     }
 }

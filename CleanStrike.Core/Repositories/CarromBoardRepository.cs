@@ -42,11 +42,12 @@ namespace CleanStrike.Core.Repositories
         private List<Player> InitializePlayers()
         {
             List<Player> players = new List<Player>();
-            players.Add(SetPlayerInformation("Player1"));
-            players.Add(SetPlayerInformation("Player2"));
+            for(int i=0;i<ApplicationConstants.MAX_PLAYERS;i++)
+            {
+                players.Add(SetPlayerInformation("Player"+(i+1)));
+            }                        
             return players;
-        }
-
+        }        
         /// <summary>
         /// Initialize each player with default values from Application Constant
         /// </summary>

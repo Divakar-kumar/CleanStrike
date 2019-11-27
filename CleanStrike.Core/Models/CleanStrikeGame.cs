@@ -128,8 +128,8 @@ namespace CleanStrike.Core.Models
         /// <returns></returns>
         public List<IStrikeType> InitializeStrikeList()
         {
-            List<IStrikeType> strikeTypes = new List<IStrikeType>() { new DefunctStrike(),new RedStrike(),new DefunctStrike(),
-                new SingleStrike(), new DefunctStrike(),new StrikerStrike(),
+            List<IStrikeType> strikeTypes = new List<IStrikeType>() { new MultiStrike(),new DefunctStrike(),new SingleStrike(),
+                new NoneStrike(), new DefunctStrike(),new StrikerStrike(),
                 new MultiStrike(new List<ICoinType>(){ new BlackCoin(),new BlackCoin(),new BlackCoin()}),
                 new NoneStrike(), new SingleStrike(), new SingleStrike(),
                 new NoneStrike(), new NoneStrike(), new SingleStrike(),
@@ -152,7 +152,7 @@ namespace CleanStrike.Core.Models
                     int maxSum = player.score;
                     for (int i = 0; i < players.Count; i++)
                     {
-                        if (i != playerIndex && maxSum >= players[i].score + ApplicationConstants.WIN_STRIKE_DIFF)
+                        if (maxSum >= players[i].score + ApplicationConstants.WIN_STRIKE_DIFF)
                         {
                             winningPlayer = player;
                             hasWinner = true;
@@ -167,6 +167,34 @@ namespace CleanStrike.Core.Models
                 }
             }
             return hasWinner;
+
+        }
+        /// <summary>
+        /// Gets particular coin type count in carrom board
+        /// </summary>        
+        /// <param name="coinType"></param>
+        /// <returns></returns>
+        public int getCoinCount(CoinType coinType)
+        {
+            int coinCount = 0;
+            foreach (var coin in this.carromBoard.coins)
+            {
+                if (coin.coinType.Equals(coinType))
+                {
+                    coinCount++;
+                }
+            }
+            return coinCount;
+        }
+
+        /// <summary>
+        /// Returns winning Player
+        /// </summary>
+        /// <returns></returns>
+        public Player GetWinner()
+        {
+            return this.winningPlayer;
+
 
         }
 

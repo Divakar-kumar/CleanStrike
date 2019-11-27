@@ -18,6 +18,7 @@ namespace CleanStrike.Core.Constants
         public static readonly int NO_OF_RED_COINS = 1;
         public static readonly int MIN_STRIKE_SCORE = 5;
         public static readonly int WIN_STRIKE_DIFF = 3;
+        public static readonly int MAX_PLAYERS = 2;
         public static readonly string SINGLE_STRIKE = "Strike";
         public static readonly string MULTI_STRIKE = "MultiStrike";
         public static readonly string STRIKER_STRIKE = "StrikerStrike";

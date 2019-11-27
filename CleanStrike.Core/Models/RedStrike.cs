@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CleanStrike.Core.Models
 {
-    class RedStrike:IStrikeType
+    public class RedStrike:IStrikeType
     {
         private int score=3;
         private List<ICoinType> coinTypes = new List<ICoinType>() { new RedCoin() };        
