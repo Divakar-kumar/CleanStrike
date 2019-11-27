@@ -110,9 +110,11 @@ namespace CleanStrike.Core.Models
             player.strikeHistory.Add(player.currentStrike);
             if (((player.strikeHistory?.Count) % ApplicationConstants.LIMIT_OF_FOULS) == 0 && checkPlayerHistoryForFouls(player))
             {
-                player.score -= strike.strikeScore;
+                player.score += strike.strikeScore;
+                var commandMessage = strike.strikeScore < 0 ? "loses" : "scores";
+                Console.Write("" + player.playerName + " " + commandMessage + " " + Math.Abs(strike.strikeScore)+" points");
                 player.score -= 1; // when loses a point for 3 consecutive turns or not scored any in 3 consecutive turns
-                Console.WriteLine("" + player.playerName + " committed a foul and the current score is " + player.score);
+                Console.WriteLine(" and also committed a foul and the current score is " + player.score);
             }
             else
             {
@@ -128,8 +130,8 @@ namespace CleanStrike.Core.Models
         /// <returns></returns>
         public List<IStrikeType> InitializeStrikeList()
         {
-            List<IStrikeType> strikeTypes = new List<IStrikeType>() { new MultiStrike(),new DefunctStrike(),new SingleStrike(),
-                new NoneStrike(), new DefunctStrike(),new StrikerStrike(),
+            List<IStrikeType> strikeTypes = new List<IStrikeType>() { new DefunctStrike(),new RedStrike(),new DefunctStrike(),
+                new SingleStrike(), new DefunctStrike(),new StrikerStrike(),
                 new MultiStrike(new List<ICoinType>(){ new BlackCoin(),new BlackCoin(),new BlackCoin()}),
                 new NoneStrike(), new SingleStrike(), new SingleStrike(),
                 new NoneStrike(), new NoneStrike(), new SingleStrike(),
