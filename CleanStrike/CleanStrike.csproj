@@ -16,7 +16,6 @@
   <ItemGroup>
     <ProjectReference Include="..\CleanStrike.Core\CleanStrike.Core.csproj" />
     <ProjectReference Include="..\CleanStrike.DependencyInjection\CleanStrike.DependencyInjection.csproj" />
-    <ProjectReference Include="..\CleanStrike.Store\CleanStrike.Store.csproj" />
   </ItemGroup>
 
   <ItemGroup>
