@@ -53,8 +53,7 @@ namespace CleanStrike.Core.Models
                 {
                     this.carromBoard.coins.Remove(coin);
                 }
-                var commandMessage = strike.GetType().Name.Equals(ApplicationConstants.DEFUNCT_STRIKE) ? "throws" : "pockets";
-                Console.WriteLine(" " + commandMessage + " " + coin.coinType + " coin");
+                ConsoleUI.CreateThrowOrPocketView(strike,coin);
             }
         }
         /// <summary>
@@ -109,18 +108,12 @@ namespace CleanStrike.Core.Models
             player.currentStrike = strike;
             player.strikeHistory.Add(player.currentStrike);
             if (((player.strikeHistory?.Count) % ApplicationConstants.LIMIT_OF_FOULS) == 0 && checkPlayerHistoryForFouls(player))
-            {
-                player.score += strike.strikeScore;
-                var commandMessage = strike.strikeScore < 0 ? "loses" : "scores";
-                Console.Write("" + player.playerName + " " + commandMessage + " " + Math.Abs(strike.strikeScore)+" points");
-                player.score -= 1; // when loses a point for 3 consecutive turns or not scored any in 3 consecutive turns
-                Console.WriteLine(" and also committed a foul and the current score is " + player.score);
+            {                
+                ConsoleUI.CreateFoulView(player, strike);
             }
             else
             {
-                player.score += strike.strikeScore;
-                var commandMessage = strike.strikeScore < 0 ? "loses" : "scores";
-                Console.WriteLine("" + player.playerName + " " + commandMessage + " " + Math.Abs(strike.strikeScore) + " point and the current score is " + player.score);
+                ConsoleUI.CreateScoreView(player, strike);
             }
         }
 

@@ -56,22 +56,12 @@ namespace CleanStrike.Core.Engine
             }
             if(_cleanStrikeGame.winningPlayer != null)
             {
-                Console.WriteLine(" =======================================");
-                Console.WriteLine("           MATCH RESULT                     ");
-                Console.WriteLine(" =======================================");
-                int playersCount = 0;
-                Console.Write("" + _cleanStrikeGame.winningPlayer.playerName+" won the game . Final Score : ");
-                foreach(var player in _cleanStrikeGame.players)
-                {
-                    playersCount++;
-                    Console.Write(player.score);
-                    if(playersCount!=_cleanStrikeGame.players.Count)
-                    Console.Write("/");
-                }
+                ConsoleUI.CreateIntroView();                
+                ConsoleUI.CreateMatchResultView(_cleanStrikeGame);                
             }
             else
             {
-                Console.WriteLine("Match is draw");
+                ConsoleUI.CreateMatchDrawView();
             }
         }
     }
