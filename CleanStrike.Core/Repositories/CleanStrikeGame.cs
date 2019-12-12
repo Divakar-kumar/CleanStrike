@@ -73,27 +73,33 @@ namespace CleanStrike.Core.Models
         /// <returns></returns>
         public bool checkPlayerHistoryForFouls(Player player)
         {
-            int foulCount = 0;
-            int noStrikeCount = 0;
+            player.noStrikeCount = 0;
+            player.foulsCount = 0;
             hasCommittedFoul = false;
-            int startIndex = player.strikeHistory.Count % ApplicationConstants.LIMIT_OF_FOULS;
-            for (int i = startIndex; i < ApplicationConstants.LIMIT_OF_FOULS; i++)
+            /**
+             * Did a mistake by taking 3 sets each time instead of last 3 strikes
+             * and also missed logic for no strike
+             * while checking now thought of changing this logic 
+             */
+            int startIndex = player.strikeHistory.Count - ApplicationConstants.LIMIT_OF_FOULS;
+            for (int i = startIndex; i < player.strikeHistory.Count; i++)
             {
                 if (player.strikeHistory[i].GetType().Name.Equals(ApplicationConstants.DEFUNCT_STRIKE))
-                    foulCount++;
+                    player.foulsCount++;
                 if (player.strikeHistory[i].GetType().Name.Equals(ApplicationConstants.STRIKER_STRIKE))
-                    noStrikeCount++;
+                    player.foulsCount++;
+                if (player.strikeHistory[i].GetType().Name.Equals(ApplicationConstants.NONE_STRIKE))
+                    player.noStrikeCount++;
             }
-            if (foulCount >= ApplicationConstants.LIMIT_OF_FOULS)
+            if (player.noStrikeCount!=0&&player.noStrikeCount%ApplicationConstants.LIMIT_OF_NONSTRIKE==0)
+            {                
+                player.foulsCount++;                
+            }
+            if (player.foulsCount!=0&&player.foulsCount%ApplicationConstants.LIMIT_OF_FOULS==0)
             {
                 hasCommittedFoul = true;
                 return hasCommittedFoul;
-            }
-            if (noStrikeCount >= ApplicationConstants.LIMIT_OF_NONSTRIKE)
-            {
-                hasCommittedFoul = true;
-                return hasCommittedFoul;
-            }
+            }                        
             return hasCommittedFoul;
         }
         /// <summary>
@@ -107,14 +113,25 @@ namespace CleanStrike.Core.Models
             player.currentStrike = null;
             player.currentStrike = strike;
             player.strikeHistory.Add(player.currentStrike);
-            if (((player.strikeHistory?.Count) % ApplicationConstants.LIMIT_OF_FOULS) == 0 && checkPlayerHistoryForFouls(player))
-            {                
-                ConsoleUI.CreateFoulView(player, strike);
+
+
+            /**
+             * Did a mistake by taking 3 sets each time instead of last 3 strikes
+             * while checking now thought of changing this logic
+             */
+
+            if (((player.strikeHistory?.Count) >= ApplicationConstants.LIMIT_OF_FOULS) && checkPlayerHistoryForFouls(player))
+            {
+                player.score += strike.strikeScore;
+                player.score -= 1; // when loses a point for 3 consecutive turns or not scored any in 3 consecutive turns                
+                ConsoleUI.CreateFoulView(player);
             }
             else
             {
-                ConsoleUI.CreateScoreView(player, strike);
-            }
+                player.score += player.noStrikeCount!=0&&player.noStrikeCount % ApplicationConstants.LIMIT_OF_NONSTRIKE == 0 ? -1 : strike.strikeScore;
+                ConsoleUI.CreateScoreView(player);                
+            }            
+
         }
 
         /// <summary>
@@ -123,11 +140,11 @@ namespace CleanStrike.Core.Models
         /// <returns></returns>
         public List<IStrikeType> InitializeStrikeList()
         {
-            List<IStrikeType> strikeTypes = new List<IStrikeType>() { new DefunctStrike(),new RedStrike(),new DefunctStrike(),
-                new SingleStrike(), new DefunctStrike(),new StrikerStrike(),
+            List<IStrikeType> strikeTypes = new List<IStrikeType>() { new NoneStrike(),new RedStrike(),new NoneStrike(),
+                new SingleStrike(), new NoneStrike(),new DefunctStrike(),
                 new MultiStrike(new List<ICoinType>(){ new BlackCoin(),new BlackCoin(),new BlackCoin()}),
-                new NoneStrike(), new SingleStrike(), new SingleStrike(),
-                new NoneStrike(), new NoneStrike(), new SingleStrike(),
+                new DefunctStrike(), new DefunctStrike(), new DefunctStrike(),
+                new DefunctStrike(), new NoneStrike(), new StrikerStrike(),
                 new NoneStrike(), new NoneStrike()};
 
             return strikeTypes;

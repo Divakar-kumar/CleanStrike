@@ -46,20 +46,14 @@ namespace CleanStrike.Core
             Console.WriteLine(" =======================================");
         }
 
-        public static void CreateFoulView(Player player, IStrikeType strike)
+        public static void CreateFoulView(Player player)
         {
-            player.score += strike.strikeScore;
-            var commandMessage = strike.strikeScore < 0 ? "loses" : "scores";
-            Console.Write("" + player.playerName + " " + commandMessage + " " + Math.Abs(strike.strikeScore) + " points");
-            player.score -= 1; // when loses a point for 3 consecutive turns or not scored any in 3 consecutive turns
-            Console.WriteLine(" and also committed a foul and the current score is " + player.score);
+            Console.WriteLine("" + player.playerName +" committed a foul and the current score is " + player.score);
         }
 
-        public static void CreateScoreView(Player player, IStrikeType strike)
+        public static void CreateScoreView(Player player)
         {
-            player.score += strike.strikeScore;
-            var commandMessage = strike.strikeScore < 0 ? "loses" : "scores";
-            Console.WriteLine("" + player.playerName + " " + commandMessage + " " + Math.Abs(strike.strikeScore) + " point and the current score is " + player.score);
+            Console.WriteLine("" + player.playerName + " current score is " + player.score);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace CleanStrike.Core.Models
 {
     public class StrikerStrike:IStrikeType
     {
-        private int score = 0;
+        private int score = -1;
         private List<ICoinType> coinTypes = new List<ICoinType>() { new StrikerCoin() };           
         public int strikeScore
         {

@@ -56,7 +56,7 @@ namespace CleanStrike.Core.Repositories
         private Player SetPlayerInformation(string playerName)
         {
             Player player = new Player(playerName, ApplicationConstants.DEFAULT_SCORE,
-                ApplicationConstants.DEFAULT_FOULS, ApplicationConstants.DEFAULT_STRIKE_TYPE_LIST,
+                ApplicationConstants.DEFAULT_FOULS,ApplicationConstants.DEFAULT_SCORE,ApplicationConstants.DEFAULT_STRIKE_TYPE_LIST,
                 ApplicationConstants.DEFAULT_STRIKE_TYPE);
             return player;
         }
